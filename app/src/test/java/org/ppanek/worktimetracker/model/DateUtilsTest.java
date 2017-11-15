@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -83,7 +82,6 @@ public class DateUtilsTest {
 
             Date date = DateUtils.createDate(hour, minute);
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeZone(TimeZone.getTimeZone("GMT"));
             calendar.setTime(date);
             assertEquals(hour, calendar.get(Calendar.HOUR_OF_DAY));
             assertEquals(minute, calendar.get(Calendar.MINUTE));
