@@ -52,7 +52,6 @@ class Workday {
         public long getBreakTime() throws IllegalArgumentException {
             return breakTime.getDuration();
         }
-
     }
 
     private TimePeriod workTime;
