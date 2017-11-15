@@ -12,11 +12,11 @@ public class TimePeriod {
     private Date begin;
     private Date end;
 
-    public void setBegin(Date begin) throws InvalidWorkdayException {
+    public void setBegin(Date begin) {
         this.begin = begin;
 
         if (this.end != null && this.begin.getTime() >= this.end.getTime()) {
-            throw new InvalidWorkdayException("Begin is equal or after end");
+            throw new IllegalArgumentException("Begin is equal or after end");
         }
     }
 
@@ -24,10 +24,10 @@ public class TimePeriod {
         return begin;
     }
 
-    public void setEnd(Date end) throws InvalidWorkdayException {
+    public void setEnd(Date end) {
         this.end = end;
         if (this.begin != null && this.end.getTime() <= this.begin.getTime()) {
-            throw new InvalidWorkdayException("End is equal or before begin");
+            throw new IllegalArgumentException("End is equal or before begin");
         }
     }
 
@@ -43,9 +43,9 @@ public class TimePeriod {
         return true;
     }
 
-    public long getDuration() throws InvalidWorkdayException {
+    public long getDuration() {
         if (!isValid())
-            throw new InvalidWorkdayException("Begin or end not correct");
+            throw new IllegalStateException("Begin or end not correct");
         return TimeUnit.MINUTES.convert(end.getTime() - begin.getTime(), TimeUnit.MILLISECONDS);
     }
 }

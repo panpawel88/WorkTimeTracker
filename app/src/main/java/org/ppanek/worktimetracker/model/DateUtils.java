@@ -47,8 +47,8 @@ public class DateUtils {
         return begin.getTime() >= end.getTime();
     }
 
-    public static boolean isLessThanOneDay(Date date) {
-        return date != null ? date.before(oneDaySinceEpoch) : false;
+    public static boolean isAfterOneDaySinceEpoch(Date date) {
+        return date != null ? date.after(oneDaySinceEpoch) || date.equals(oneDaySinceEpoch) : false;
     }
 
     public static Date createDate(int hour, int minute) {

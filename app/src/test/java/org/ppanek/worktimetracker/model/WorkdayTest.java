@@ -3,10 +3,10 @@ package org.ppanek.worktimetracker.model;
 import org.junit.Test;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by pawel on 11.11.2017.
@@ -15,22 +15,21 @@ import static org.junit.Assert.assertTrue;
 public class WorkdayTest {
 
     @Test
-    public void testBasic() throws InvalidWorkdayException {
+    public void testBasic() {
         Workday workday = new Workday();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2017, 10, 11, 8, 0);
-        workday.setBegin(calendar.getTime());
+        Date begin = DateUtils.createDate(8, 0);
+        workday.setBegin(begin);
 
-        calendar.set(2017, 10, 11, 16, 0);
-        workday.setEnd(calendar.getTime());
+        Date end = DateUtils.createDate(16, 0);
+        workday.setEnd(end);
 
         long expectedMinutes = 8 * 60;
         assertEquals(expectedMinutes, workday.getWorkTime());
     }
 
-    @Test(expected = InvalidWorkdayException.class)
-    public void testInvalidValues() throws InvalidWorkdayException {
+    @Test(expected = IllegalStateException.class)
+    public void testInvalidValues() {
         Workday workday = new Workday();
 
         workday.setBegin(null);
@@ -39,36 +38,37 @@ public class WorkdayTest {
         workday.getWorkTime();
     }
 
-    @Test(expected = InvalidWorkdayException.class)
-    public void testBeginAfterEnd() throws InvalidWorkdayException {
+    @Test(expected = IllegalArgumentException.class)
+    public void testBeginAfterEnd() {
         Workday workday = new Workday();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2017, 10, 12, 8, 0);
-        workday.setEnd(calendar.getTime());
+        Date end = DateUtils.createDate(8, 0);
+        workday.setEnd(end);
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(end);
         calendar.add(Calendar.MINUTE, 1);
         workday.setBegin(calendar.getTime());
     }
 
-    @Test(expected = InvalidWorkdayException.class)
-    public void testBeginEqualEnd() throws InvalidWorkdayException {
+    @Test(expected = IllegalArgumentException.class)
+    public void testBeginEqualEnd() {
         Workday workday = new Workday();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2017, 10, 12, 8, 0);
-        workday.setBegin(calendar.getTime());
-        workday.setEnd(calendar.getTime());
+        Date date = DateUtils.createDate(8, 0);
+        workday.setBegin(date);
+        workday.setEnd(date);
     }
 
-    @Test(expected = InvalidWorkdayException.class)
-    public void testEndBeforeBegin() throws InvalidWorkdayException {
+    @Test(expected = IllegalArgumentException.class)
+    public void testEndBeforeBegin() {
         Workday workday = new Workday();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2017, 10, 12, 8, 0);
-        workday.setBegin(calendar.getTime());
+        Date begin = DateUtils.createDate(8, 0);
+        workday.setBegin(begin);
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(begin);
         calendar.add(Calendar.MINUTE, -1);
         workday.setEnd(calendar.getTime());
     }
@@ -77,44 +77,21 @@ public class WorkdayTest {
     public void testAddBreak() {
         Workday workday = new Workday();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2017, 10, 11, 8, 0);
-        try {
-            workday.setBegin(calendar.getTime());
-        } catch (InvalidWorkdayException e) {
-            assertTrue(false);
-        }
+        Date begin = DateUtils.createDate(8, 0);
+        workday.setBegin(begin);
 
-        calendar.set(2017, 10, 11, 16, 0);
-        try {
-            workday.setEnd(calendar.getTime());
-        } catch (InvalidWorkdayException e) {
-            assertTrue(false);
-        }
+        Date end = DateUtils.createDate(16, 0);
+        workday.setEnd(end);
 
         long expectedMinutes = 8 * 60;
-        try {
-            assertEquals(expectedMinutes, workday.getWorkTime());
-        } catch (InvalidWorkdayException e) {
-            assertTrue(false);
-        }
+        assertEquals(expectedMinutes, workday.getWorkTime());
 
-        try {
-            Workday.Break aBreak = workday.newBreak();
-            calendar.set(2017, 10, 11, 13, 0);
-            aBreak.setBegin(calendar.getTime());
-            calendar.set(2017, 10, 11, 13, 30);
-            aBreak.setEnd(calendar.getTime());
-        } catch (InvalidWorkdayException e) {
-            assertTrue(false);
-        }
+        Workday.Break aBreak = workday.newBreak();
+        aBreak.setBegin(DateUtils.createDate(13, 0));
+        aBreak.setEnd((DateUtils.createDate(13, 30)));
 
         expectedMinutes -= 30;
-        try {
-            assertEquals(expectedMinutes, workday.getWorkTime());
-        } catch (InvalidWorkdayException e) {
-            assertTrue(false);
-        }
+        assertEquals(expectedMinutes, workday.getWorkTime());
     }
 
     @Test
@@ -130,94 +107,53 @@ public class WorkdayTest {
         Workday.Break secondBreak = workday.newBreak();
         assertEquals(2, workday.getBreaks().size());
         assertSame(secondBreak, workday.getBreaks().get(1));
-
     }
 
-    @Test(expected = InvalidWorkdayException.class)
-    public void testInvalidBreak() throws InvalidWorkdayException {
+    @Test(expected = IllegalStateException.class)
+    public void testInvalidBreak() {
         Workday workday = new Workday();
 
-        Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.set(2017, 10, 11, 8, 0);
-            workday.setBegin(calendar.getTime());
-            calendar.add(Calendar.HOUR_OF_DAY, 8);
-            workday.setEnd(calendar.getTime());
-        } catch (InvalidWorkdayException e) {
-            assertTrue(false);
-        }
+        workday.setBegin(DateUtils.createDate(8, 0));
+        workday.setEnd(DateUtils.createDate(16,0));
 
         workday.newBreak();
         workday.getWorkTime();
     }
 
-
-    @Test(expected = InvalidWorkdayException.class)
-    public void testBreakBeforeBegin1() throws InvalidWorkdayException {
+    @Test(expected = IllegalArgumentException.class)
+    public void testBreakBeforeBegin1() {
         Workday workday = new Workday();
-
-        Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.set(2017, 10, 11, 8, 0);
-            workday.setBegin(calendar.getTime());
-        } catch (InvalidWorkdayException e) {
-            assertTrue(false);
-        }
+        workday.setBegin(DateUtils.createDate(8, 0));
 
         Workday.Break aBreak = workday.newBreak();
-        calendar.add(Calendar.HOUR_OF_DAY, -1);
-        aBreak.setBegin(calendar.getTime());
+        aBreak.setBegin(DateUtils.createDate(7, 0));
     }
 
-    @Test(expected = InvalidWorkdayException.class)
-    public void testBreakBeforeBegin2() throws InvalidWorkdayException {
+    @Test(expected = IllegalArgumentException.class)
+    public void testBreakBeforeBegin2() {
         Workday workday = new Workday();
-
-        Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.set(2017, 10, 11, 8, 0);
-            workday.setBegin(calendar.getTime());
-        } catch (InvalidWorkdayException e) {
-            assertTrue(false);
-        }
+        workday.setBegin(DateUtils.createDate(8, 0));
 
         Workday.Break aBreak = workday.newBreak();
-        calendar.add(Calendar.HOUR_OF_DAY, -1);
-        aBreak.setEnd(calendar.getTime());
+        aBreak.setEnd(DateUtils.createDate(7, 0));
     }
 
-    @Test(expected = InvalidWorkdayException.class)
-    public void testBreakAfterEnd1() throws InvalidWorkdayException {
+    @Test(expected = IllegalArgumentException.class)
+    public void testBreakAfterEnd1() {
         Workday workday = new Workday();
-
-        Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.set(2017, 10, 11, 8, 0);
-            workday.setEnd(calendar.getTime());
-        } catch (InvalidWorkdayException e) {
-            assertTrue(false);
-        }
+        workday.setEnd(DateUtils.createDate(8, 0));
 
         Workday.Break aBreak = workday.newBreak();
-        calendar.add(Calendar.HOUR_OF_DAY, 1);
-        aBreak.setBegin(calendar.getTime());
+        aBreak.setBegin(DateUtils.createDate(9, 0));
     }
 
-    @Test(expected = InvalidWorkdayException.class)
-    public void testBreakAfterEnd2() throws InvalidWorkdayException {
+    @Test(expected = IllegalArgumentException.class)
+    public void testBreakAfterEnd2() {
         Workday workday = new Workday();
-
-        Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.set(2017, 10, 11, 8, 0);
-            workday.setEnd(calendar.getTime());
-        } catch (InvalidWorkdayException e) {
-            assertTrue(false);
-        }
+        workday.setEnd(DateUtils.createDate(8, 0));
 
         Workday.Break aBreak = workday.newBreak();
-        calendar.add(Calendar.HOUR_OF_DAY, 1);
-        aBreak.setEnd(calendar.getTime());
+        aBreak.setEnd(DateUtils.createDate(9, 0));
     }
 
     @Test

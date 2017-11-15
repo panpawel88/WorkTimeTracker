@@ -55,22 +55,22 @@ public class DateUtilsTest {
     }
 
     @Test
-    public void testIsLessThanOneDay() {
+    public void testIsAfterOneDaySinceEpoch() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(0));
         calendar.add(Calendar.DAY_OF_MONTH, 1);
-        Date invalid = calendar.getTime();
-        assertFalse(DateUtils.isLessThanOneDay(invalid));
+        Date valid = calendar.getTime();
+        assertTrue(DateUtils.isAfterOneDaySinceEpoch(valid));
 
         calendar.setTime(new Date(0));
-        Date valid = calendar.getTime();
-        assertTrue(DateUtils.isLessThanOneDay(valid));
+        Date invalid = calendar.getTime();
+        assertFalse(DateUtils.isAfterOneDaySinceEpoch(invalid));
 
         calendar.setTime(new Date(0));
         calendar.add(Calendar.HOUR_OF_DAY, 23);
         calendar.add(Calendar.MINUTE, 59);
-        valid = calendar.getTime();
-        assertTrue(DateUtils.isLessThanOneDay(valid));
+        invalid = calendar.getTime();
+        assertFalse(DateUtils.isAfterOneDaySinceEpoch(invalid));
     }
 
     @Test

@@ -13,10 +13,6 @@ public class WorkTimeTrackerTest {
         // TODO: API should look like tracker.addWorkday(Calendar.getInstance().getTime(), aWorkday)
         WorkTimeTracker tracker = WorkTimeTracker.getInstance();
         Workday aWorkday = new Workday();
-        try {
-            aWorkday.setBegin(null);
-        } catch (InvalidWorkdayException e) {
-            e.printStackTrace();
-        }
+        aWorkday.setBegin(null);
     }
 }

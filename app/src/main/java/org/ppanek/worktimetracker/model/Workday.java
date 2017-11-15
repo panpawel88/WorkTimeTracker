@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.ppanek.worktimetracker.model.DateUtils.*;
+import static org.ppanek.worktimetracker.model.DateUtils.isAfterOneDaySinceEpoch;
+import static org.ppanek.worktimetracker.model.DateUtils.isGreater;
+import static org.ppanek.worktimetracker.model.DateUtils.isLess;
 
 class Workday {
     public static class Break {
@@ -17,11 +19,13 @@ class Workday {
             this.workday = workday;
         }
 
-        public void setBegin(Date begin) throws InvalidWorkdayException {
+        public void setBegin(Date begin) {
+            if (isAfterOneDaySinceEpoch(begin))
+                throw new IllegalArgumentException("Date argument should be less than 1 day since Epoch");
             if (isLess(begin, workday.getBegin()))
-                throw new InvalidWorkdayException("Break starts before work time begins");
+                throw new IllegalArgumentException("Break starts before work time begins");
             if (isGreater(begin, workday.getEnd()))
-                throw new InvalidWorkdayException("Break starts after work time ends");
+                throw new IllegalArgumentException("Break starts after work time ends");
 
             breakTime.setBegin(begin);
         }
@@ -30,11 +34,13 @@ class Workday {
             return breakTime.getBegin();
         }
 
-        public void setEnd(Date end) throws InvalidWorkdayException {
+        public void setEnd(Date end) {
+            if (isAfterOneDaySinceEpoch(end))
+                throw new IllegalArgumentException("Date argument should be less than 1 day since Epoch");
             if (isLess(end, workday.getBegin()))
-                throw new InvalidWorkdayException("Break ends before work time begins");
+                throw new IllegalArgumentException("Break ends before work time begins");
             if (isGreater(end, workday.getEnd()))
-                throw new InvalidWorkdayException("Break ends after work time ends");
+                throw new IllegalArgumentException("Break ends after work time ends");
 
             breakTime.setEnd(end);
         }
@@ -43,7 +49,7 @@ class Workday {
             return breakTime.getEnd();
         }
 
-        public long getBreakTime() throws InvalidWorkdayException {
+        public long getBreakTime() throws IllegalArgumentException {
             return breakTime.getDuration();
         }
 
@@ -54,14 +60,16 @@ class Workday {
 
     public Workday() {
         workTime = new TimePeriod();
-        breaks = new ArrayList<Break>();
+        breaks = new ArrayList<>();
     }
 
-    public void setBegin(Date begin) throws InvalidWorkdayException {
+    public void setBegin(Date begin) {
+        if (isAfterOneDaySinceEpoch(begin))
+            throw new IllegalArgumentException("Date argument should be less than 1 day since Epoch");
         if (begin != null) {
             for (Break aBreak : breaks) {
                 if (isGreater(begin, aBreak.getBegin()) || isGreater(begin, aBreak.getEnd()))
-                    throw new InvalidWorkdayException("Workday begins after a break");
+                    throw new IllegalArgumentException("Workday begins after a break");
             }
         }
         workTime.setBegin(begin);
@@ -71,11 +79,13 @@ class Workday {
         return workTime.getBegin();
     }
 
-    public void setEnd(Date end) throws InvalidWorkdayException {
+    public void setEnd(Date end) {
+        if (isAfterOneDaySinceEpoch(end))
+            throw new IllegalArgumentException("Date argument should be less than 1 day since Epoch");
         if (end != null) {
             for (Break aBreak : breaks) {
                 if (isLess(end, aBreak.getBegin()) || isLess(end, aBreak.getEnd()))
-                    throw new InvalidWorkdayException("Workday ends before a break");
+                    throw new IllegalArgumentException("Workday ends before a break");
             }
         }
         workTime.setEnd(end);
@@ -85,7 +95,7 @@ class Workday {
         return workTime.getEnd();
     }
 
-    public long getWorkTime() throws InvalidWorkdayException {
+    public long getWorkTime() {
         long totalBreakTime = 0;
         for (Break aBreak : breaks) {
             totalBreakTime += aBreak.getBreakTime();
