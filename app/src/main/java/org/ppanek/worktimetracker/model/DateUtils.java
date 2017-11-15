@@ -2,7 +2,6 @@ package org.ppanek.worktimetracker.model;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Created by pawel on 13.11.2017.
@@ -53,6 +52,8 @@ public class DateUtils {
     }
 
     public static Date createDate(int hour, int minute) {
+        if (hour < 0 || hour > 23 || minute < 0 || minute > 59)
+            throw new IllegalArgumentException();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(0));
         calendar.set(Calendar.HOUR_OF_DAY, hour);

@@ -8,6 +8,7 @@ import java.util.Date;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
 /**
  * Created by pawel on 13.11.2017.
@@ -85,6 +86,18 @@ public class DateUtilsTest {
             calendar.setTime(date);
             assertEquals(hour, calendar.get(Calendar.HOUR_OF_DAY));
             assertEquals(minute, calendar.get(Calendar.MINUTE));
+        }
+
+        Integer invalid[][] = new Integer[][] {{-1, 0}, {0, -1}, {0, 60}, {25, 0}};
+        for (Integer[] pair : invalid) {
+            try {
+                int hour = pair[0];
+                int minute = pair[1];
+                Date date = DateUtils.createDate(hour, minute);
+                fail("Exception not thrown");
+            } catch (IllegalArgumentException exception) {
+                // intentionally empty
+            }
         }
     }
 
