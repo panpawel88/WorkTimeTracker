@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Calendar;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertSame;
 import static junit.framework.Assert.fail;
 
 /**
@@ -15,7 +16,7 @@ public class WorkTimeTrackerTest {
 
     @Test
     public void testSetAndGetWorkday() {
-        WorkTimeTracker tracker = WorkTimeTracker.getInstance();
+        WorkTimeTracker tracker = new WorkTimeTracker();
         Workday aWorkday = new Workday();
 
         Calendar calendar = Calendar.getInstance();
@@ -26,7 +27,7 @@ public class WorkTimeTrackerTest {
 
     @Test
     public void testInvalidValues() {
-        WorkTimeTracker tracker = WorkTimeTracker.getInstance();
+        WorkTimeTracker tracker = new WorkTimeTracker();
         try {
             tracker.setWorkday(null, null);
             fail();
@@ -47,6 +48,21 @@ public class WorkTimeTrackerTest {
         } catch (IllegalArgumentException e) {
             fail();
         }
+    }
+
+    @Test
+    public void testSetAndGetInSameDay() {
+        WorkTimeTracker tracker = new WorkTimeTracker();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+
+        Workday workday = new Workday();
+
+        tracker.setWorkday(calendar.getTime(), workday);
+        assertSame(workday, tracker.getWorkday(calendar.getTime()));
+
+        calendar.add(Calendar.HOUR_OF_DAY, 8);
+        assertSame(workday, tracker.getWorkday(calendar.getTime()));
     }
 
 }
