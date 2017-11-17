@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Calendar;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertSame;
 import static junit.framework.Assert.fail;
 
@@ -42,6 +43,13 @@ public class WorkTimeTrackerTest {
             // intentionally empty
         }
 
+        try {
+            tracker.removeWorkday(null);
+            fail();
+        } catch (IllegalArgumentException e) {
+            // intentionally empty
+        }
+
         // It's legal to set null workday
         try {
             tracker.setWorkday(Calendar.getInstance().getTime(), null);
@@ -51,7 +59,7 @@ public class WorkTimeTrackerTest {
     }
 
     @Test
-    public void testSetAndGetInSameDay() {
+    public void testSetAndGetWorkdayInSameDay() {
         WorkTimeTracker tracker = new WorkTimeTracker();
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 8);
@@ -63,6 +71,21 @@ public class WorkTimeTrackerTest {
 
         calendar.add(Calendar.HOUR_OF_DAY, 8);
         assertSame(workday, tracker.getWorkday(calendar.getTime()));
+    }
+
+    @Test
+    public void testSetAndRemoveWorkday() {
+        WorkTimeTracker tracker = new WorkTimeTracker();
+        Calendar calendar = Calendar.getInstance();
+        Workday workday = new Workday();
+
+        tracker.setWorkday(calendar.getTime(), workday);
+
+        assertSame(workday, tracker.getWorkday(calendar.getTime()));
+
+        tracker.removeWorkday(calendar.getTime());
+
+        assertNull(tracker.getWorkday(calendar.getTime()));
     }
 
 }

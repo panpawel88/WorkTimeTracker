@@ -44,4 +44,10 @@ public class WorkTimeTracker {
             throw new IllegalArgumentException();
         return workdays.get(truncateTime(date));
     }
+
+    public void removeWorkday(Date date) {
+        if (date == null)
+            throw new IllegalArgumentException();
+        workdays.remove(truncateTime(date));
+    }
 }
