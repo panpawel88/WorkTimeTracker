@@ -12,11 +12,10 @@ import static org.ppanek.worktimetracker.model.DateUtils.isLess;
 public class Break implements IBreak {
 
     private final IWorkday workday;
-
-    private TimePeriod breakTime;
+    private IBreak decorated;
 
     public Break(IWorkday workday) {
-        this.breakTime = new TimePeriod();
+        this.decorated = new DummyBreak();
         this.workday = workday;
     }
 
@@ -28,11 +27,11 @@ public class Break implements IBreak {
         if (isGreater(begin, workday.getEnd()))
             throw new IllegalArgumentException("Break starts after work time ends");
 
-        breakTime.setBegin(begin);
+        decorated.setBegin(begin);
     }
 
     public Date getBegin() {
-        return breakTime.getBegin();
+        return decorated.getBegin();
     }
 
     public void setEnd(Date end) {
@@ -43,14 +42,14 @@ public class Break implements IBreak {
         if (isGreater(end, workday.getEnd()))
             throw new IllegalArgumentException("Break ends after work time ends");
 
-        breakTime.setEnd(end);
+        decorated.setEnd(end);
     }
 
     public Date getEnd() {
-        return breakTime.getEnd();
+        return decorated.getEnd();
     }
 
     public long getBreakTime() throws IllegalArgumentException {
-        return breakTime.getDuration();
+        return decorated.getBreakTime();
     }
 }
