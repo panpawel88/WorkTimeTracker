@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class TimePeriod {
-
     private Date begin;
     private Date end;
 

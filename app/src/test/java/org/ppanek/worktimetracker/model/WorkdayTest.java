@@ -86,7 +86,7 @@ public class WorkdayTest {
         long expectedMinutes = 8 * 60;
         assertEquals(expectedMinutes, workday.getWorkTime());
 
-        Workday.Break aBreak = workday.newBreak();
+        IBreak aBreak = workday.newBreak();
         aBreak.setBegin(DateUtils.createDate(13, 0));
         aBreak.setEnd((DateUtils.createDate(13, 30)));
 
@@ -100,11 +100,11 @@ public class WorkdayTest {
 
         assertEquals(0, workday.getBreaks().size());
 
-        Workday.Break firstBreak = workday.newBreak();
+        IBreak firstBreak = workday.newBreak();
         assertEquals(1, workday.getBreaks().size());
         assertSame(firstBreak, workday.getBreaks().get(0));
 
-        Workday.Break secondBreak = workday.newBreak();
+        IBreak secondBreak = workday.newBreak();
         assertEquals(2, workday.getBreaks().size());
         assertSame(secondBreak, workday.getBreaks().get(1));
     }
@@ -125,7 +125,7 @@ public class WorkdayTest {
         Workday workday = new Workday();
         workday.setBegin(DateUtils.createDate(8, 0));
 
-        Workday.Break aBreak = workday.newBreak();
+        IBreak aBreak = workday.newBreak();
         aBreak.setBegin(DateUtils.createDate(7, 0));
     }
 
@@ -134,7 +134,7 @@ public class WorkdayTest {
         Workday workday = new Workday();
         workday.setBegin(DateUtils.createDate(8, 0));
 
-        Workday.Break aBreak = workday.newBreak();
+        IBreak aBreak = workday.newBreak();
         aBreak.setEnd(DateUtils.createDate(7, 0));
     }
 
@@ -143,7 +143,7 @@ public class WorkdayTest {
         Workday workday = new Workday();
         workday.setEnd(DateUtils.createDate(8, 0));
 
-        Workday.Break aBreak = workday.newBreak();
+        IBreak aBreak = workday.newBreak();
         aBreak.setBegin(DateUtils.createDate(9, 0));
     }
 
@@ -152,14 +152,14 @@ public class WorkdayTest {
         Workday workday = new Workday();
         workday.setEnd(DateUtils.createDate(8, 0));
 
-        Workday.Break aBreak = workday.newBreak();
+        IBreak aBreak = workday.newBreak();
         aBreak.setEnd(DateUtils.createDate(9, 0));
     }
 
     @Test
     public void testRemoveBreak() {
         Workday workday = new Workday();
-        Workday.Break aBreak = workday.newBreak();
+        IBreak aBreak = workday.newBreak();
         assertEquals(1, workday.getBreaks().size());
 
         workday.removeBreak(aBreak);
