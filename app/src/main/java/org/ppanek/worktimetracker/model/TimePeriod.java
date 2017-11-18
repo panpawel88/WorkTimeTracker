@@ -7,10 +7,11 @@ import java.util.concurrent.TimeUnit;
  * Created by pawel on 12.11.2017.
  */
 
-public class TimePeriod {
+public class TimePeriod implements ITimePeriod {
     private Date begin;
     private Date end;
 
+    @Override
     public void setBegin(Date begin) {
         this.begin = begin;
 
@@ -19,10 +20,12 @@ public class TimePeriod {
         }
     }
 
+    @Override
     public Date getBegin() {
         return begin;
     }
 
+    @Override
     public void setEnd(Date end) {
         this.end = end;
         if (this.begin != null && this.end.getTime() <= this.begin.getTime()) {
@@ -30,21 +33,23 @@ public class TimePeriod {
         }
     }
 
+    @Override
     public Date getEnd() {
         return end;
     }
 
-    public boolean isValid() {
+    @Override
+    public long getDuration() {
+        if (!isValid())
+            throw new IllegalStateException("Begin or end not correct");
+        return TimeUnit.MINUTES.convert(end.getTime() - begin.getTime(), TimeUnit.MILLISECONDS);
+    }
+
+    private boolean isValid() {
         if (begin == null || end == null)
             return false;
         if (begin.getTime() >= end.getTime())
             return false;
         return true;
-    }
-
-    public long getDuration() {
-        if (!isValid())
-            throw new IllegalStateException("Begin or end not correct");
-        return TimeUnit.MINUTES.convert(end.getTime() - begin.getTime(), TimeUnit.MILLISECONDS);
     }
 }

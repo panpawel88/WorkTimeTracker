@@ -25,7 +25,7 @@ public class WorkdayTest {
         workday.setEnd(end);
 
         long expectedMinutes = 8 * 60;
-        assertEquals(expectedMinutes, workday.getWorkTime());
+        assertEquals(expectedMinutes, workday.getTotalWorkTime());
     }
 
     @Test(expected = IllegalStateException.class)
@@ -35,7 +35,7 @@ public class WorkdayTest {
         workday.setBegin(null);
         workday.setEnd(null);
 
-        workday.getWorkTime();
+        workday.getTotalWorkTime();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -84,14 +84,14 @@ public class WorkdayTest {
         workday.setEnd(end);
 
         long expectedMinutes = 8 * 60;
-        assertEquals(expectedMinutes, workday.getWorkTime());
+        assertEquals(expectedMinutes, workday.getTotalWorkTime());
 
         IBreak aBreak = workday.newBreak();
         aBreak.setBegin(DateUtils.createDate(13, 0));
         aBreak.setEnd((DateUtils.createDate(13, 30)));
 
         expectedMinutes -= 30;
-        assertEquals(expectedMinutes, workday.getWorkTime());
+        assertEquals(expectedMinutes, workday.getTotalWorkTime());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class WorkdayTest {
         workday.setEnd(DateUtils.createDate(16,0));
 
         workday.newBreak();
-        workday.getWorkTime();
+        workday.getTotalWorkTime();
     }
 
     @Test(expected = IllegalArgumentException.class)

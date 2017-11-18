@@ -1,6 +1,5 @@
 package org.ppanek.worktimetracker.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,67 +9,80 @@ import static org.ppanek.worktimetracker.model.DateUtils.isLess;
 
 public class Workday implements IWorkday {
 
-    private TimePeriod workTime;
-    private List<IBreak> breaks;
+    private IWorkday decorated;
 
     public Workday() {
-        workTime = new TimePeriod();
-        breaks = new ArrayList<>();
+        decorated = new DummyWorkday();
     }
 
+    public Workday(IWorkday decorated) {
+        this.decorated = decorated;
+    }
+
+    @Override
     public void setBegin(Date begin) {
         if (isAfterOneDaySinceEpoch(begin))
             throw new IllegalArgumentException("Date argument should be less than 1 day since Epoch");
         if (begin != null) {
-            for (IBreak aBreak : breaks) {
+            for (IBreak aBreak : decorated.getBreaks()) {
                 if (isGreater(begin, aBreak.getBegin()) || isGreater(begin, aBreak.getEnd()))
                     throw new IllegalArgumentException("Workday begins after a break");
             }
         }
-        workTime.setBegin(begin);
+        decorated.setBegin(begin);
     }
 
+    @Override
     public Date getBegin() {
-        return workTime.getBegin();
+        return decorated.getBegin();
     }
 
+    @Override
     public void setEnd(Date end) {
         if (isAfterOneDaySinceEpoch(end))
             throw new IllegalArgumentException("Date argument should be less than 1 day since Epoch");
         if (end != null) {
-            for (IBreak aBreak : breaks) {
+            for (IBreak aBreak : decorated.getBreaks()) {
                 if (isLess(end, aBreak.getBegin()) || isLess(end, aBreak.getEnd()))
                     throw new IllegalArgumentException("Workday ends before a break");
             }
         }
-        workTime.setEnd(end);
+        decorated.setEnd(end);
     }
 
+    @Override
     public Date getEnd() {
-        return workTime.getEnd();
+        return decorated.getEnd();
     }
 
-    public long getWorkTime() {
+    @Override
+    public long getTotalWorkTime() {
         long totalBreakTime = 0;
-        for (IBreak aBreak : breaks) {
+        for (IBreak aBreak : decorated.getBreaks()) {
             totalBreakTime += aBreak.getBreakTime();
         }
-        return workTime.getDuration() - totalBreakTime;
+        return decorated.getWorkTime().getDuration() - totalBreakTime;
     }
 
+    @Override
     public IBreak newBreak() {
-        Break aBreak = new Break(this);
-        breaks.add(aBreak);
-        return aBreak;
+        return decorated.newBreak();
     }
 
+    @Override
     public List<IBreak> getBreaks() {
-        return breaks;
+        return decorated.getBreaks();
     }
 
+    @Override
     public void removeBreak(IBreak aBreak) {
         if (aBreak != null) {
-            breaks.remove(aBreak);
+            decorated.removeBreak(aBreak);
         }
+    }
+
+    @Override
+    public ITimePeriod getWorkTime() {
+        return decorated.getWorkTime();
     }
 }

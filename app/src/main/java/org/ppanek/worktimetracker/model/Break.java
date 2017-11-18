@@ -11,11 +11,11 @@ import static org.ppanek.worktimetracker.model.DateUtils.isLess;
  */
 public class Break implements IBreak {
 
-    private final Workday workday;
+    private final IWorkday workday;
 
     private TimePeriod breakTime;
 
-    public Break(Workday workday) {
+    public Break(IWorkday workday) {
         this.breakTime = new TimePeriod();
         this.workday = workday;
     }
