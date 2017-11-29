@@ -1,7 +1,16 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.objectboxVersion = '1.2.1'
+    ext {
+        osName = System.getProperty("os.name").toLowerCase()
+        isLinux = osName.contains("linux")
+        isWindows = osName.contains("windows")
+        is64 = System.getProperty("sun.arch.data.model") == "64"
+        isLinux64 = isLinux && is64
+        isWindows64 = isWindows && is64
+        objectboxVersion = '1.2.1'
+    }
+
     repositories {
         jcenter()
         maven { url "http://objectbox.net/beta-repo/" }
