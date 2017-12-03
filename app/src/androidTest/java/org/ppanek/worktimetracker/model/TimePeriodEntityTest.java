@@ -1,6 +1,9 @@
 package org.ppanek.worktimetracker.model;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.Calendar;
 
@@ -13,6 +16,7 @@ import static org.junit.Assert.assertNotEquals;
  * Created by pawel on 29.11.2017.
  */
 
+@RunWith(AndroidJUnit4.class)
 public class TimePeriodEntityTest extends AbstractObjectBoxTest {
 
     @Test

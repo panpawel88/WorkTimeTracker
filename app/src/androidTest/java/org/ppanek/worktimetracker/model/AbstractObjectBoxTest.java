@@ -2,6 +2,7 @@ package org.ppanek.worktimetracker.model;
 
 import org.junit.After;
 import org.junit.Before;
+import org.ppanek.worktimetracker.model.MyObjectBox;
 
 import java.io.File;
 import java.io.IOException;

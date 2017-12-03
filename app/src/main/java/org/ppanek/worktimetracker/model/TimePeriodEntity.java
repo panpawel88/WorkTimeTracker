@@ -51,7 +51,6 @@ public class TimePeriodEntity implements ITimePeriod {
         if (begin == null || end == null)
             throw new IllegalStateException("Begin or end not correct");
         return TimeUnit.MINUTES.convert(end.getTime() - begin.getTime(), TimeUnit.MILLISECONDS);
-
     }
 
     @Override
