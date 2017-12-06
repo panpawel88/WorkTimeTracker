@@ -18,6 +18,7 @@ public class TimePeriodEntity implements ITimePeriod {
     private Date begin;
 
     private Date end;
+
     public long getId() {
         return id;
     }

@@ -70,7 +70,7 @@ public class Workday implements IWorkday {
     }
 
     @Override
-    public List<IBreak> getBreaks() {
+    public List<? extends IBreak> getBreaks() {
         return decorated.getBreaks();
     }
 

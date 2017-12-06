@@ -15,6 +15,7 @@ public class BreakEntity implements IBreak {
     @Id
     private long id;
     private ToOne<TimePeriodEntity> timePeriod;
+    private ToOne<WorkdayEntity> workday;
 
     public BreakEntity() {
         timePeriod.setTarget(new TimePeriodEntity());
@@ -28,12 +29,20 @@ public class BreakEntity implements IBreak {
         this.id = id;
     }
 
-    ToOne<TimePeriodEntity> getTimePeriod() {
+    public ToOne<TimePeriodEntity> getTimePeriod() {
         return timePeriod;
     }
 
-    void setTimePeriod(ToOne<TimePeriodEntity> timePeriod) {
+    public void setTimePeriod(ToOne<TimePeriodEntity> timePeriod) {
         this.timePeriod = timePeriod;
+    }
+
+    public ToOne<WorkdayEntity> getWorkday() {
+        return workday;
+    }
+
+    public void setWorkday(ToOne<WorkdayEntity> workday) {
+        this.workday = workday;
     }
 
     @Override
