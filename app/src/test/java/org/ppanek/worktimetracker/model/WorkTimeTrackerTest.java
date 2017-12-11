@@ -18,7 +18,7 @@ public class WorkTimeTrackerTest {
     @Test
     public void testSetAndGetWorkday() {
         WorkTimeTracker tracker = new WorkTimeTracker();
-        Workday aWorkday = new Workday();
+        WorkdayDefault aWorkday = new WorkdayDefault();
 
         Calendar calendar = Calendar.getInstance();
         tracker.setWorkday(calendar.getTime(), aWorkday);
@@ -64,7 +64,7 @@ public class WorkTimeTrackerTest {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 8);
 
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
 
         tracker.setWorkday(calendar.getTime(), workday);
         assertSame(workday, tracker.getWorkday(calendar.getTime()));
@@ -77,7 +77,7 @@ public class WorkTimeTrackerTest {
     public void testSetAndRemoveWorkday() {
         WorkTimeTracker tracker = new WorkTimeTracker();
         Calendar calendar = Calendar.getInstance();
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
 
         tracker.setWorkday(calendar.getTime(), workday);
 

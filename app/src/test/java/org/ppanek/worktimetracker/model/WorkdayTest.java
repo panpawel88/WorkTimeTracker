@@ -16,7 +16,7 @@ public class WorkdayTest {
 
     @Test
     public void testBasic() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
 
         Date begin = DateUtils.createDate(8, 0);
         workday.setBegin(begin);
@@ -30,7 +30,7 @@ public class WorkdayTest {
 
     @Test(expected = IllegalStateException.class)
     public void testInvalidValues() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
 
         workday.setBegin(null);
         workday.setEnd(null);
@@ -40,7 +40,7 @@ public class WorkdayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testBeginAfterEnd() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
 
         Date end = DateUtils.createDate(8, 0);
         workday.setEnd(end);
@@ -53,7 +53,7 @@ public class WorkdayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testBeginEqualEnd() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
 
         Date date = DateUtils.createDate(8, 0);
         workday.setBegin(date);
@@ -62,7 +62,7 @@ public class WorkdayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testEndBeforeBegin() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
 
         Date begin = DateUtils.createDate(8, 0);
         workday.setBegin(begin);
@@ -75,7 +75,7 @@ public class WorkdayTest {
 
     @Test
     public void testAddBreak() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
 
         Date begin = DateUtils.createDate(8, 0);
         workday.setBegin(begin);
@@ -96,7 +96,7 @@ public class WorkdayTest {
 
     @Test
     public void testGetBreaks() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
 
         assertEquals(0, workday.getBreaks().size());
 
@@ -111,7 +111,7 @@ public class WorkdayTest {
 
     @Test(expected = IllegalStateException.class)
     public void testInvalidBreak() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
 
         workday.setBegin(DateUtils.createDate(8, 0));
         workday.setEnd(DateUtils.createDate(16,0));
@@ -122,7 +122,7 @@ public class WorkdayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testBreakBeforeBegin1() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
         workday.setBegin(DateUtils.createDate(8, 0));
 
         IBreak aBreak = workday.newBreak();
@@ -131,7 +131,7 @@ public class WorkdayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testBreakBeforeBegin2() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
         workday.setBegin(DateUtils.createDate(8, 0));
 
         IBreak aBreak = workday.newBreak();
@@ -140,7 +140,7 @@ public class WorkdayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testBreakAfterEnd1() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
         workday.setEnd(DateUtils.createDate(8, 0));
 
         IBreak aBreak = workday.newBreak();
@@ -149,7 +149,7 @@ public class WorkdayTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testBreakAfterEnd2() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
         workday.setEnd(DateUtils.createDate(8, 0));
 
         IBreak aBreak = workday.newBreak();
@@ -158,7 +158,7 @@ public class WorkdayTest {
 
     @Test
     public void testRemoveBreak() {
-        Workday workday = new Workday();
+        WorkdayDefault workday = new WorkdayDefault();
         IBreak aBreak = workday.newBreak();
         assertEquals(1, workday.getBreaks().size());
 

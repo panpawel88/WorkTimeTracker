@@ -16,5 +16,4 @@ public interface IWorkday {
     IBreak newBreak();
     List<? extends IBreak> getBreaks();
     void removeBreak(IBreak aBreak);
-    ITimePeriod getWorkTime();
 }

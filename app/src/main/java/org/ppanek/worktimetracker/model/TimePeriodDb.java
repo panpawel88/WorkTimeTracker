@@ -11,7 +11,7 @@ import io.objectbox.annotation.Id;
  */
 
 @Entity
-public class TimePeriodEntity implements ITimePeriod {
+public class TimePeriodDb extends TimePeriodBase {
     @Id
     private long id;
 
@@ -28,27 +28,27 @@ public class TimePeriodEntity implements ITimePeriod {
     }
 
     @Override
-    public Date getBegin() {
+    protected Date getBeginImpl() {
         return begin;
     }
 
     @Override
-    public void setBegin(Date begin) {
+    protected void setBeginImpl(Date begin) {
         this.begin = begin;
     }
 
     @Override
-    public Date getEnd() {
+    protected Date getEndImpl() {
         return end;
     }
 
     @Override
-    public void setEnd(Date end) {
+    protected void setEndImpl(Date end) {
         this.end = end;
     }
 
     @Override
-    public long getDuration() {
+    protected long getDurationImpl() {
         if (begin == null || end == null)
             throw new IllegalStateException("Begin or end not correct");
         return TimeUnit.MINUTES.convert(end.getTime() - begin.getTime(), TimeUnit.MILLISECONDS);
@@ -59,7 +59,7 @@ public class TimePeriodEntity implements ITimePeriod {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TimePeriodEntity entity = (TimePeriodEntity) o;
+        TimePeriodDb entity = (TimePeriodDb) o;
 
         if (id != entity.id) return false;
         if (begin != null ? !begin.equals(entity.begin) : entity.begin != null) return false;

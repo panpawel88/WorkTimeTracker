@@ -12,7 +12,7 @@ import java.util.Map;
 public class WorkTimeTracker {
     private static WorkTimeTracker instance;
 
-    private Map<Date, Workday> workdays;
+    private Map<Date, WorkdayBase> workdays;
 
     protected WorkTimeTracker() {
         workdays = new HashMap<>();
@@ -33,13 +33,13 @@ public class WorkTimeTracker {
         return instance;
     }
 
-    public void setWorkday(Date date, Workday workday) {
+    public void setWorkday(Date date, WorkdayBase workday) {
         if (date == null)
             throw new IllegalArgumentException();
         workdays.put(truncateTime(date), workday);
     }
 
-    public Workday getWorkday(Date date) {
+    public WorkdayBase getWorkday(Date date) {
         if (date == null)
             throw new IllegalArgumentException();
         return workdays.get(truncateTime(date));

@@ -11,14 +11,15 @@ import io.objectbox.relation.ToOne;
  */
 
 @Entity
-public class BreakEntity implements IBreak {
+public class BreakDb extends BreakBase {
     @Id
     private long id;
-    private ToOne<TimePeriodEntity> timePeriod;
-    private ToOne<WorkdayEntity> workday;
+    private ToOne<TimePeriodDb> timePeriod;
+    private ToOne<WorkdayDb> workday;
 
-    public BreakEntity() {
-        timePeriod.setTarget(new TimePeriodEntity());
+    public BreakDb() {
+        timePeriod.setTarget(new TimePeriodDb());
+        workday.setTarget(new WorkdayDb());
     }
 
     public long getId() {
@@ -29,45 +30,50 @@ public class BreakEntity implements IBreak {
         this.id = id;
     }
 
-    public ToOne<TimePeriodEntity> getTimePeriod() {
+    public ToOne<TimePeriodDb> getTimePeriod() {
         return timePeriod;
     }
 
-    public void setTimePeriod(ToOne<TimePeriodEntity> timePeriod) {
+    public void setTimePeriod(ToOne<TimePeriodDb> timePeriod) {
         this.timePeriod = timePeriod;
     }
 
-    public ToOne<WorkdayEntity> getWorkday() {
+    public ToOne<WorkdayDb> getWorkday() {
         return workday;
     }
 
-    public void setWorkday(ToOne<WorkdayEntity> workday) {
+    public void setWorkday(ToOne<WorkdayDb> workday) {
         this.workday = workday;
     }
 
     @Override
-    public void setBegin(Date begin) {
+    protected void setBeginImpl(Date begin) {
         timePeriod.getTarget().setBegin(begin);
     }
 
     @Override
-    public Date getBegin() {
+    protected Date getBeginImpl() {
         return timePeriod.getTarget().getBegin();
     }
 
     @Override
-    public void setEnd(Date end) {
+    protected void setEndImpl(Date end) {
         timePeriod.getTarget().setEnd(end);
     }
 
     @Override
-    public Date getEnd() {
+    protected Date getEndImpl() {
         return timePeriod.getTarget().getEnd();
     }
 
     @Override
-    public long getBreakTime() {
+    protected long getBreakTimeImpl() {
         return timePeriod.getTarget().getDuration();
+    }
+
+    @Override
+    protected IWorkday getWorkdayImpl() {
+        return workday.getTarget();
     }
 
     @Override
@@ -75,7 +81,7 @@ public class BreakEntity implements IBreak {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BreakEntity that = (BreakEntity) o;
+        BreakDb that = (BreakDb) o;
 
         if (id != that.id) return false;
         return timePeriod != null ? timePeriod.equals(that.timePeriod) : that.timePeriod == null;

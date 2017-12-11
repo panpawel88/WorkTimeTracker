@@ -17,12 +17,12 @@ import static org.junit.Assert.assertNotEquals;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class TimePeriodEntityTest extends AbstractObjectBoxTest {
+public class TimePeriodDbTest extends AbstractObjectBoxTest {
 
     @Test
     public void testCreateAndRead() {
-        Box<TimePeriodEntity> box = store.boxFor(TimePeriodEntity.class);
-        TimePeriodEntity entity = new TimePeriodEntity();
+        Box<TimePeriodDb> box = store.boxFor(TimePeriodDb.class);
+        TimePeriodDb entity = new TimePeriodDb();
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 10);
@@ -33,7 +33,7 @@ public class TimePeriodEntityTest extends AbstractObjectBoxTest {
         long id = box.put(entity);
         assertNotEquals(0, id);
 
-        TimePeriodEntity retrieved = box.get(id);
+        TimePeriodDb retrieved = box.get(id);
         assertEquals(entity, retrieved);
     }
 }

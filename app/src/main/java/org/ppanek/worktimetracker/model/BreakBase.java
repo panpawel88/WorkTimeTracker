@@ -9,47 +9,44 @@ import static org.ppanek.worktimetracker.model.DateUtils.isLess;
 /**
  * Created by pawel on 18.11.2017.
  */
-public class Break implements IBreak {
+public abstract class BreakBase implements IBreak {
 
-    private final IWorkday workday;
-    private IBreak decorated;
-
-    public Break(IWorkday workday) {
-        this.decorated = new DummyBreak();
-        this.workday = workday;
-    }
+    protected abstract void setBeginImpl(Date begin);
+    protected abstract Date getBeginImpl();
+    protected abstract void setEndImpl(Date end);
+    protected abstract Date getEndImpl();
+    protected abstract long getBreakTimeImpl();
+    protected abstract IWorkday getWorkdayImpl();
 
     public void setBegin(Date begin) {
         if (isAfterOneDaySinceEpoch(begin))
             throw new IllegalArgumentException("Date argument should be less than 1 day since Epoch");
-        if (isLess(begin, workday.getBegin()))
+        if (isLess(begin, getWorkdayImpl().getBegin()))
             throw new IllegalArgumentException("Break starts before work time begins");
-        if (isGreater(begin, workday.getEnd()))
+        if (isGreater(begin, getWorkdayImpl().getEnd()))
             throw new IllegalArgumentException("Break starts after work time ends");
 
-        decorated.setBegin(begin);
+        setBeginImpl(begin);
     }
 
     public Date getBegin() {
-        return decorated.getBegin();
+        return getBeginImpl();
     }
 
     public void setEnd(Date end) {
         if (isAfterOneDaySinceEpoch(end))
             throw new IllegalArgumentException("Date argument should be less than 1 day since Epoch");
-        if (isLess(end, workday.getBegin()))
+        if (isLess(end, getWorkdayImpl().getBegin()))
             throw new IllegalArgumentException("Break ends before work time begins");
-        if (isGreater(end, workday.getEnd()))
+        if (isGreater(end, getWorkdayImpl().getEnd()))
             throw new IllegalArgumentException("Break ends after work time ends");
 
-        decorated.setEnd(end);
+        setEndImpl(end);
     }
 
-    public Date getEnd() {
-        return decorated.getEnd();
-    }
+    public Date getEnd() { return getEndImpl(); }
 
     public long getBreakTime() throws IllegalArgumentException {
-        return decorated.getBreakTime();
+        return getBreakTimeImpl();
     }
 }
