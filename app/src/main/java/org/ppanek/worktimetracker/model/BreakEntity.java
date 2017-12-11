@@ -78,13 +78,13 @@ public class BreakEntity implements IBreak {
         BreakEntity that = (BreakEntity) o;
 
         if (id != that.id) return false;
-        return timePeriod.getTarget() != null ? timePeriod.getTarget().equals(that.timePeriod.getTarget()) : that.timePeriod.getTarget() == null;
+        return timePeriod != null ? timePeriod.equals(that.timePeriod) : that.timePeriod == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (timePeriod.getTarget() != null ? timePeriod.getTarget().hashCode() : 0);
+        result = 31 * result + (timePeriod != null ? timePeriod.hashCode() : 0);
         return result;
     }
 }

@@ -107,7 +107,7 @@ public class WorkdayEntity implements IWorkday {
         WorkdayEntity that = (WorkdayEntity) o;
 
         if (id != that.id) return false;
-        if (workTimeEntity.getTarget() != null ? !workTimeEntity.getTarget().equals(that.workTimeEntity.getTarget()) : that.workTimeEntity.getTarget() != null)
+        if (workTimeEntity != null ? !workTimeEntity.equals(that.workTimeEntity) : that.workTimeEntity != null)
             return false;
         return breaks.toArray().length > 0 ? breaks.toArray().equals(that.breaks.toArray()) : that.breaks.toArray().length == 0;
     }
@@ -115,7 +115,7 @@ public class WorkdayEntity implements IWorkday {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (workTimeEntity != null ? workTimeEntity.getTarget().hashCode() : 0);
+        result = 31 * result + (workTimeEntity != null ? workTimeEntity.hashCode() : 0);
         result = 31 * result + (breaks != null ? breaks.hashCode() : 0);
         return result;
     }

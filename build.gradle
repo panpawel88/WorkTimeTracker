@@ -8,7 +8,7 @@ buildscript {
         is64 = System.getProperty("sun.arch.data.model") == "64"
         isLinux64 = isLinux && is64
         isWindows64 = isWindows && is64
-        objectboxVersion = '1.3.2'
+        objectboxVersion = '1.3.4'
     }
 
     repositories {
