@@ -83,7 +83,7 @@ public class WorkdayEntity implements IWorkday {
 
     @Override
     public List<BreakEntity> getBreaks() {
-        return breaks.getListFactory().createList();
+        return breaks;
     }
 
     @Override
@@ -109,7 +109,7 @@ public class WorkdayEntity implements IWorkday {
         if (id != that.id) return false;
         if (workTimeEntity != null ? !workTimeEntity.equals(that.workTimeEntity) : that.workTimeEntity != null)
             return false;
-        return breaks.toArray().length > 0 ? breaks.toArray().equals(that.breaks.toArray()) : that.breaks.toArray().length == 0;
+        return breaks != null ? breaks.containsAll(that.breaks) : that.breaks == null;
     }
 
     @Override
