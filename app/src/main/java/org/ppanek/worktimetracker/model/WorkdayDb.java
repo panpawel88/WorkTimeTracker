@@ -85,7 +85,7 @@ public class WorkdayDb extends WorkdayBase {
 
     @Override
     protected IBreak newBreakImpl() {
-        BreakDb aBreak = new BreakDb();
+        BreakDb aBreak = new BreakDb(this);
         breaksDb.add(aBreak);
         return aBreak;
     }
@@ -103,7 +103,14 @@ public class WorkdayDb extends WorkdayBase {
         WorkdayDb that = (WorkdayDb) o;
 
         if (id != that.id) return false;
-        if (workTime != null ? !workTime.equals(that.workTime) : that.workTime != null)
+        if (workTime.getTarget() != null ? !workTime.getTarget().equals(that.workTime.getTarget()) : that.workTime.getTarget() != null)
+            return false;
+
+        if (breaksDb != null && that.breaksDb == null)
+            return false;
+        if (breaksDb == null && that.breaksDb != null)
+            return false;
+        if (breaksDb != null && that.breaksDb != null && breaksDb.size() != that.breaksDb.size())
             return false;
         return breaksDb != null ? breaksDb.containsAll(that.breaksDb) : that.breaksDb == null;
     }
