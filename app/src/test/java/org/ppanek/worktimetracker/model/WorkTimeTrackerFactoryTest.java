@@ -19,7 +19,7 @@ public class WorkTimeTrackerFactoryTest {
     @Test
     public void testCreate() {
         Properties props = new Properties(tempDir.getRoot());
-        WorkTimeTracker tracker = WorkTimeTrackerFactory.create(props);
+        IWorkTimeTracker tracker = WorkTimeTrackerFactory.create(props);
         try {
             assertEquals(props.getBackend(), tracker.getClass());
         } catch (ClassNotFoundException e) {
@@ -27,7 +27,7 @@ public class WorkTimeTrackerFactoryTest {
             fail();
         }
 
-        props.setBackend(WorkTimeTracker.class);
+        props.setBackend(WorkTimeTrackerDefault.class);
         tracker = WorkTimeTrackerFactory.create(props);
         try {
             assertEquals(props.getBackend(), tracker.getClass());

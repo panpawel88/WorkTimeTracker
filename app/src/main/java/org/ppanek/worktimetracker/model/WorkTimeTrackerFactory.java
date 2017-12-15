@@ -6,10 +6,10 @@ package org.ppanek.worktimetracker.model;
 
 public class WorkTimeTrackerFactory {
 
-    public static WorkTimeTracker create(Properties props) {
+    public static IWorkTimeTracker create(Properties props) {
         try {
             Class backendClass = props.getBackend();
-            return (WorkTimeTracker) backendClass.newInstance();
+            return (IWorkTimeTracker) backendClass.newInstance();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
