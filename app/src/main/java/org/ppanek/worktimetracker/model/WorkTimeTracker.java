@@ -27,12 +27,6 @@ public class WorkTimeTracker {
         return calendar.getTime();
     }
 
-    public static synchronized WorkTimeTracker getInstance() {
-        if (instance == null)
-            instance = new WorkTimeTracker();
-        return instance;
-    }
-
     public void setWorkday(Date date, WorkdayBase workday) {
         if (date == null)
             throw new IllegalArgumentException();
