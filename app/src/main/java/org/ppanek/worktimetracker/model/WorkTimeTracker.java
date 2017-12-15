@@ -18,7 +18,7 @@ public class WorkTimeTracker {
         workdays = new HashMap<>();
     }
 
-    private Date truncateTime(Date date) {
+    protected Date truncateTime(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
