@@ -1,5 +1,6 @@
 package org.ppanek.worktimetracker.model;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,11 @@ public class WorkTimeTrackerDefault extends WorkTimeTrackerBase {
     }
 
     @Override
+    public IWorkday newWorkday() {
+        return new WorkdayDefault();
+    }
+
+    @Override
     public void putWorkday(Date date, IWorkday workday) {
         if (date == null)
             throw new IllegalArgumentException();
@@ -27,6 +33,11 @@ public class WorkTimeTrackerDefault extends WorkTimeTrackerBase {
         if (date == null)
             throw new IllegalArgumentException();
         return workdays.get(truncateTime(date));
+    }
+
+    @Override
+    public Collection<IWorkday> getAllWorkdays() {
+        return workdays.values();
     }
 
     @Override
