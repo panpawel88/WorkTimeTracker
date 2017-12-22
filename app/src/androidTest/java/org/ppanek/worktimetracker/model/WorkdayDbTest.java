@@ -43,10 +43,12 @@ public class WorkdayDbTest extends AbstractObjectBoxTest {
         IBreak firstBreak = workday.newBreak();
         firstBreak.setBegin(DateUtils.createDate(11, 0));
         firstBreak.setEnd(DateUtils.createDate(12, 0));
+        workday.putBreak(firstBreak);
 
         IBreak secondBreak = workday.newBreak();
         secondBreak.setBegin(DateUtils.createDate(12, 0));
         secondBreak.setEnd(DateUtils.createDate(13, 0));
+        workday.putBreak(secondBreak);
 
         workday.setEnd(DateUtils.createDate(19, 0));
 
@@ -81,18 +83,21 @@ public class WorkdayDbTest extends AbstractObjectBoxTest {
             IBreak aBreak = workday1.newBreak();
             aBreak.setBegin(break1Begin);
             aBreak.setEnd(break1End);
+            workday1.putBreak(aBreak);
         }
 
         {
             IBreak aBreak = workday1.newBreak();
             aBreak.setBegin(break2Begin);
             aBreak.setEnd(break2End);
+            workday1.putBreak(aBreak);
         }
 
         {
             IBreak aBreak = workday2.newBreak();
             aBreak.setBegin(break1Begin);
             aBreak.setEnd(break1End);
+            workday2.putBreak(aBreak);
         }
 
         assertNotEquals(workday1, workday2);

@@ -85,9 +85,14 @@ public class WorkdayDb extends WorkdayBase {
 
     @Override
     protected IBreak newBreakImpl() {
-        BreakDb aBreak = new BreakDb(this);
-        breaksDb.add(aBreak);
-        return aBreak;
+        return new BreakDb(this);
+    }
+
+    @Override
+    protected void putBreakImpl(IBreak aBreak) {
+        if (aBreak instanceof BreakDb) {
+            breaksDb.add((BreakDb) aBreak);
+        }
     }
 
     @Override
@@ -110,7 +115,7 @@ public class WorkdayDb extends WorkdayBase {
             return false;
         if (breaksDb == null && that.breaksDb != null)
             return false;
-        if (breaksDb != null && that.breaksDb != null && breaksDb.size() != that.breaksDb.size())
+        if (breaksDb != null && breaksDb.size() != that.breaksDb.size())
             return false;
         return breaksDb != null ? breaksDb.containsAll(that.breaksDb) : that.breaksDb == null;
     }

@@ -16,6 +16,7 @@ public abstract class WorkdayBase implements IWorkday {
     protected abstract List<? extends IBreak> getBreaksImpl();
     protected abstract void removeBreakImpl(IBreak aBreak);
     protected abstract IBreak newBreakImpl();
+    protected abstract void putBreakImpl(IBreak aBreak);
     protected abstract ITimePeriod getWorkTimeImpl();
 
     @Override
@@ -66,6 +67,13 @@ public abstract class WorkdayBase implements IWorkday {
     @Override
     public IBreak newBreak() {
         return newBreakImpl();
+    }
+
+    @Override
+    public void putBreak(IBreak aBreak) {
+        if (aBreak != null) {
+            putBreakImpl(aBreak);
+        }
     }
 
     @Override

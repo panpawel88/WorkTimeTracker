@@ -89,6 +89,7 @@ public class WorkdayTest {
         IBreak aBreak = workday.newBreak();
         aBreak.setBegin(DateUtils.createDate(13, 0));
         aBreak.setEnd((DateUtils.createDate(13, 30)));
+        workday.putBreak(aBreak);
 
         expectedMinutes -= 30;
         assertEquals(expectedMinutes, workday.getTotalWorkTime());
@@ -101,10 +102,14 @@ public class WorkdayTest {
         assertEquals(0, workday.getBreaks().size());
 
         IBreak firstBreak = workday.newBreak();
+        assertEquals(0, workday.getBreaks().size());
+
+        workday.putBreak(firstBreak);
         assertEquals(1, workday.getBreaks().size());
         assertSame(firstBreak, workday.getBreaks().get(0));
 
         IBreak secondBreak = workday.newBreak();
+        workday.putBreak(secondBreak);
         assertEquals(2, workday.getBreaks().size());
         assertSame(secondBreak, workday.getBreaks().get(1));
     }
@@ -116,7 +121,8 @@ public class WorkdayTest {
         workday.setBegin(DateUtils.createDate(8, 0));
         workday.setEnd(DateUtils.createDate(16,0));
 
-        workday.newBreak();
+        IBreak aBreak = workday.newBreak();
+        workday.putBreak(aBreak);
         workday.getTotalWorkTime();
     }
 
@@ -160,6 +166,7 @@ public class WorkdayTest {
     public void testRemoveBreak() {
         WorkdayDefault workday = new WorkdayDefault();
         IBreak aBreak = workday.newBreak();
+        workday.putBreak(aBreak);
         assertEquals(1, workday.getBreaks().size());
 
         workday.removeBreak(aBreak);

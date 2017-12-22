@@ -50,9 +50,12 @@ public class WorkdayDefault extends WorkdayBase {
 
     @Override
     protected IBreak newBreakImpl() {
-        IBreak aBreak = new BreakDefault(this);
+        return new BreakDefault(this);
+    }
+
+    @Override
+    protected void putBreakImpl(IBreak aBreak) {
         breaks.add(aBreak);
-        return aBreak;
     }
 
     @Override
