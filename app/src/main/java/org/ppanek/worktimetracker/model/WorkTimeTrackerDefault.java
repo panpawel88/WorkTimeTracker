@@ -23,7 +23,7 @@ public class WorkTimeTrackerDefault extends WorkTimeTrackerBase {
 
     @Override
     public void putWorkday(Date date, IWorkday workday) {
-        if (date == null)
+        if (date == null || workday == null)
             throw new IllegalArgumentException();
         workdays.put(truncateTime(date), workday);
     }

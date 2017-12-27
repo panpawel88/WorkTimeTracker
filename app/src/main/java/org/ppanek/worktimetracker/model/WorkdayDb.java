@@ -17,6 +17,7 @@ import io.objectbox.relation.ToOne;
 public class WorkdayDb extends WorkdayBase {
     @Id
     private long id;
+    private Date date;
     private ToOne<TimePeriodDb> workTime;
 
     @Backlink
@@ -111,6 +112,9 @@ public class WorkdayDb extends WorkdayBase {
         if (workTime.getTarget() != null ? !workTime.getTarget().equals(that.workTime.getTarget()) : that.workTime.getTarget() != null)
             return false;
 
+        if (date != null && !date.equals(that.date))
+            return false;
+
         if (breaksDb != null && that.breaksDb == null)
             return false;
         if (breaksDb == null && that.breaksDb != null)
@@ -123,8 +127,17 @@ public class WorkdayDb extends WorkdayBase {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (workTime != null ? workTime.hashCode() : 0);
         result = 31 * result + (breaksDb != null ? breaksDb.hashCode() : 0);
         return result;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
