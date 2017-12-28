@@ -1,8 +1,9 @@
 package org.ppanek.worktimetracker.model;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,8 +42,10 @@ public class WorkTimeTrackerDefault extends WorkTimeTrackerBase {
     }
 
     @Override
-    public Collection<IWorkday> getAllWorkdays() {
-        return workdays.values();
+    public List<? extends IWorkday> getAllWorkdays() {
+        ArrayList<IWorkday> result = new ArrayList<>();
+        result.addAll(workdays.values());
+        return result;
     }
 
     @Override

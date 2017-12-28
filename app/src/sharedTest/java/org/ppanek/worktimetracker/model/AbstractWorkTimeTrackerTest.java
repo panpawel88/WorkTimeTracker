@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
@@ -104,15 +105,52 @@ public abstract class AbstractWorkTimeTrackerTest {
     @Test
     public void testGetWhen() {
         IWorkTimeTracker tracker = createTracker();
-        Calendar calendarExpected = Calendar.getInstance();
         IWorkday workday = tracker.newWorkday();
 
-        Date whenExpected = calendarExpected.getTime();
+        Date whenExpected = Calendar.getInstance().getTime();
         tracker.putWorkday(whenExpected, workday);
 
-        Date whenRetrieved = tracker.getWorkday(calendarExpected.getTime()).getWhen();
+        Date whenRetrieved = tracker.getWorkday(whenExpected).getWhen();
+        compareDates(whenExpected, whenRetrieved);
+    }
+
+    @Test
+    public void testGetAllWorkdays() {
+        IWorkTimeTracker tracker = createTracker();
+        List<? extends IWorkday> allWorkdays = tracker.getAllWorkdays();
+        assertEquals(0, allWorkdays.size());
+
+        IWorkday firstWorkday = tracker.newWorkday();
+        Calendar calendar = Calendar.getInstance();
+        Date firstWhen = calendar.getTime();
+        tracker.putWorkday(firstWhen, firstWorkday);
+
+        allWorkdays = tracker.getAllWorkdays();
+        assertEquals(1, allWorkdays.size());
+        compareDates(firstWhen, allWorkdays.get(0).getWhen());
+
+        IWorkday secondWorkday = tracker.newWorkday();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        Date secondWhen = calendar.getTime();
+        tracker.putWorkday(secondWhen, secondWorkday);
+
+        allWorkdays = tracker.getAllWorkdays();
+        assertEquals(2, allWorkdays.size());
+        IWorkday secondRetrieved = allWorkdays.get(0).equals(firstWorkday) ? allWorkdays.get(1) : allWorkdays.get(0);
+        compareDates(secondWhen, secondRetrieved.getWhen());
+
+        tracker.removeWorkday(firstWhen);
+        assertEquals(1, tracker.getAllWorkdays().size());
+        tracker.removeWorkday(secondWhen);
+        assertEquals(0, tracker.getAllWorkdays().size());
+    }
+
+    private void compareDates(Date dateExpected, Date dateRetrieved) {
+        Calendar calendarExpected = Calendar.getInstance();
+        calendarExpected.setTime(dateExpected);
+
         Calendar calendarRetrieved = Calendar.getInstance();
-        calendarRetrieved.setTime(whenRetrieved);
+        calendarRetrieved.setTime(dateRetrieved);
 
         Integer[] fields = new Integer[] {Calendar.YEAR, Calendar.DAY_OF_YEAR, Calendar.MONTH};
         for (Integer field : fields)

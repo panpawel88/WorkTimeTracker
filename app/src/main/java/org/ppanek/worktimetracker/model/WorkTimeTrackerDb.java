@@ -1,6 +1,5 @@
 package org.ppanek.worktimetracker.model;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class WorkTimeTrackerDb extends WorkTimeTrackerBase {
     }
 
     @Override
-    public Collection<? extends IWorkday> getAllWorkdays() {
+    public List<? extends IWorkday> getAllWorkdays() {
         return box.getAll();
     }
 
