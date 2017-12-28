@@ -1,5 +1,7 @@
 package org.ppanek.worktimetracker.model;
 
+import org.ppanek.worktimetracker.model.interfaces.IWorkTimeTracker;
+
 /**
  * Created by pawel on 15.12.2017.
  */

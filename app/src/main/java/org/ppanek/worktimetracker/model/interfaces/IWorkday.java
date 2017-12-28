@@ -1,4 +1,4 @@
-package org.ppanek.worktimetracker.model;
+package org.ppanek.worktimetracker.model.interfaces;
 
 import java.util.Date;
 import java.util.List;

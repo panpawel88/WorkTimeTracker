@@ -2,6 +2,9 @@ package org.ppanek.worktimetracker.model;
 
 import org.junit.After;
 import org.junit.Before;
+import org.ppanek.worktimetracker.model.db.WorkTimeTrackerDb;
+import org.ppanek.worktimetracker.model.db.WorkdayDb;
+import org.ppanek.worktimetracker.model.interfaces.IWorkTimeTracker;
 
 import java.io.IOException;
 

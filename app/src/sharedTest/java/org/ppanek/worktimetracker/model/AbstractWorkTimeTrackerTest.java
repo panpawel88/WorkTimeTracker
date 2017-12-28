@@ -3,6 +3,8 @@ package org.ppanek.worktimetracker.model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.ppanek.worktimetracker.model.interfaces.IWorkTimeTracker;
+import org.ppanek.worktimetracker.model.interfaces.IWorkday;
 
 import java.io.IOException;
 import java.util.Calendar;

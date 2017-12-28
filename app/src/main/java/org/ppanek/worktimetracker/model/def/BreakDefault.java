@@ -1,4 +1,7 @@
-package org.ppanek.worktimetracker.model;
+package org.ppanek.worktimetracker.model.def;
+
+import org.ppanek.worktimetracker.model.base.BreakBase;
+import org.ppanek.worktimetracker.model.interfaces.IWorkday;
 
 import java.util.Date;
 

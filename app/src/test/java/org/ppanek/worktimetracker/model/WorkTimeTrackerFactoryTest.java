@@ -3,6 +3,8 @@ package org.ppanek.worktimetracker.model;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.ppanek.worktimetracker.model.def.WorkTimeTrackerDefault;
+import org.ppanek.worktimetracker.model.interfaces.IWorkTimeTracker;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;

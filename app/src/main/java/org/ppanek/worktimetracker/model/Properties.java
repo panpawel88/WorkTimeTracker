@@ -12,7 +12,7 @@ import java.net.URI;
 
 public class Properties extends java.util.Properties {
     public static final String BACKEND = "org.ppanek.worktimetracker.property.backend";
-    public static final String DEFAULT_BACKEND = "org.ppanek.worktimetracker.model.WorkTimeTrackerDb";
+    public static final String DEFAULT_BACKEND = "org.ppanek.worktimetracker.model.db.WorkTimeTrackerDb";
 
     private static final String PROPERTIES_FILE = "worktimetracker.properties";
     private final File rootDir;

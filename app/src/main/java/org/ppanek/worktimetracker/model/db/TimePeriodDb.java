@@ -1,4 +1,6 @@
-package org.ppanek.worktimetracker.model;
+package org.ppanek.worktimetracker.model.db;
+
+import org.ppanek.worktimetracker.model.base.TimePeriodBase;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;

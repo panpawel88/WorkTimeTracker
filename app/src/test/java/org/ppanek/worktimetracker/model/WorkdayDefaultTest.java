@@ -1,6 +1,8 @@
 package org.ppanek.worktimetracker.model;
 
 import org.junit.Test;
+import org.ppanek.worktimetracker.model.def.WorkdayDefault;
+import org.ppanek.worktimetracker.model.interfaces.IBreak;
 
 import java.util.Calendar;
 import java.util.Date;
