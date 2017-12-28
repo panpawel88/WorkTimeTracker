@@ -10,6 +10,7 @@ import java.util.List;
 
 public class WorkdayDefault extends WorkdayBase {
 
+    private Date when;
     private ITimePeriod workTime;
     private List<IBreak> breaks;
 
@@ -61,5 +62,35 @@ public class WorkdayDefault extends WorkdayBase {
     @Override
     protected ITimePeriod getWorkTimeImpl() {
         return workTime;
+    }
+
+    @Override
+    public Date getWhen() {
+        return when;
+    }
+
+    public void setWhen(Date when) {
+        this.when = when;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WorkdayDefault that = (WorkdayDefault) o;
+
+        if (when != null ? !when.equals(that.when) : that.when != null) return false;
+        if (workTime != null ? !workTime.equals(that.workTime) : that.workTime != null)
+            return false;
+        return breaks != null ? breaks.equals(that.breaks) : that.breaks == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = when != null ? when.hashCode() : 0;
+        result = 31 * result + (workTime != null ? workTime.hashCode() : 0);
+        result = 31 * result + (breaks != null ? breaks.hashCode() : 0);
+        return result;
     }
 }

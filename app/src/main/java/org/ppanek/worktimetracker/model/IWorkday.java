@@ -8,9 +8,10 @@ import java.util.List;
  */
 
 public interface IWorkday {
-    void setBegin(Date date);
+    Date getWhen();
+    void setBegin(Date time);
     Date getBegin();
-    void setEnd(Date end);
+    void setEnd(Date time);
     Date getEnd();
     long getTotalWorkTime();
     IBreak newBreak();

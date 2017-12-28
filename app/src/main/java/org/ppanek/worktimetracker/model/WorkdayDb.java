@@ -17,7 +17,7 @@ import io.objectbox.relation.ToOne;
 public class WorkdayDb extends WorkdayBase {
     @Id
     private long id;
-    private Date date;
+    private Date when;
     private ToOne<TimePeriodDb> workTime;
 
     @Backlink
@@ -109,10 +109,9 @@ public class WorkdayDb extends WorkdayBase {
         WorkdayDb that = (WorkdayDb) o;
 
         if (id != that.id) return false;
-        if (workTime.getTarget() != null ? !workTime.getTarget().equals(that.workTime.getTarget()) : that.workTime.getTarget() != null)
+        if (when != null ? !when.equals(that.when) : that.when != null)
             return false;
-
-        if (date != null && !date.equals(that.date))
+        if (workTime.getTarget() != null ? !workTime.getTarget().equals(that.workTime.getTarget()) : that.workTime.getTarget() != null)
             return false;
 
         if (breaksDb != null && that.breaksDb == null)
@@ -127,17 +126,18 @@ public class WorkdayDb extends WorkdayBase {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (workTime != null ? workTime.hashCode() : 0);
+        result = 31 * result + (when != null ? when.hashCode() : 0);
+        result = 31 * result + (workTime.getTarget() != null ? workTime.getTarget().hashCode() : 0);
         result = 31 * result + (breaksDb != null ? breaksDb.hashCode() : 0);
         return result;
     }
 
-    public Date getDate() {
-        return date;
+    @Override
+    public Date getWhen() {
+        return when;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setWhen(Date when) {
+        this.when = when;
     }
 }

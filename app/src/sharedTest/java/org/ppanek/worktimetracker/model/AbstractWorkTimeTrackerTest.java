@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Date;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
@@ -98,5 +99,23 @@ public abstract class AbstractWorkTimeTrackerTest {
         tracker.removeWorkday(calendar.getTime());
 
         assertNull(tracker.getWorkday(calendar.getTime()));
+    }
+
+    @Test
+    public void testGetWhen() {
+        IWorkTimeTracker tracker = createTracker();
+        Calendar calendarExpected = Calendar.getInstance();
+        IWorkday workday = tracker.newWorkday();
+
+        Date whenExpected = calendarExpected.getTime();
+        tracker.putWorkday(whenExpected, workday);
+
+        Date whenRetrieved = tracker.getWorkday(calendarExpected.getTime()).getWhen();
+        Calendar calendarRetrieved = Calendar.getInstance();
+        calendarRetrieved.setTime(whenRetrieved);
+
+        Integer[] fields = new Integer[] {Calendar.YEAR, Calendar.DAY_OF_YEAR, Calendar.MONTH};
+        for (Integer field : fields)
+            assertEquals(calendarExpected.get(field), calendarRetrieved.get(field));
     }
 }

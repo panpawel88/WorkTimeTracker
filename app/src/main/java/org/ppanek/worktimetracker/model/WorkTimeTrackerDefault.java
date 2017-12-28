@@ -25,7 +25,12 @@ public class WorkTimeTrackerDefault extends WorkTimeTrackerBase {
     public void putWorkday(Date date, IWorkday workday) {
         if (date == null || workday == null)
             throw new IllegalArgumentException();
-        workdays.put(truncateTime(date), workday);
+        if (!(workday instanceof WorkdayDefault))
+            throw new IllegalArgumentException();
+        Date truncated = truncateTime(date);
+        WorkdayDefault workdayDefault = (WorkdayDefault) workday;
+        workdayDefault.setWhen(truncated);
+        workdays.put(truncated, workday);
     }
 
     @Override

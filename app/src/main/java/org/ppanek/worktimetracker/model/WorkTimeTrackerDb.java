@@ -42,7 +42,7 @@ public class WorkTimeTrackerDb extends WorkTimeTrackerBase {
                 throw new IllegalStateException("Couldn't put more than one Workday per day");
         }
 
-        updated.setDate(truncated);
+        updated.setWhen(truncated);
         box.put(updated);
     }
 
@@ -68,7 +68,7 @@ public class WorkTimeTrackerDb extends WorkTimeTrackerBase {
     }
 
     private WorkdayDb getWorkdayByDate(Date truncated) {
-        List<WorkdayDb> workdayDbs = box.query().equal(WorkdayDb_.date, truncated).build().find();
+        List<WorkdayDb> workdayDbs = box.query().equal(WorkdayDb_.when, truncated).build().find();
         if (workdayDbs.size() == 1)
             return workdayDbs.get(0);
         return null;
