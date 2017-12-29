@@ -56,6 +56,13 @@ public class WorkTimeTrackerDb extends WorkTimeTrackerBase {
     }
 
     @Override
+    public List<? extends IWorkday> getWorkdays(Date begin, Date end) {
+        Date truncatedBegin = truncateTime(begin);
+        Date truncatedEnd = truncateTime(end);
+        return box.query().between(WorkdayDb_.when, truncatedBegin, truncatedEnd).build().find();
+    }
+
+    @Override
     public List<? extends IWorkday> getAllWorkdays() {
         return box.getAll();
     }

@@ -45,6 +45,21 @@ public class WorkTimeTrackerDefault extends WorkTimeTrackerBase {
     }
 
     @Override
+    public List<? extends IWorkday> getWorkdays(Date begin, Date end) {
+        Date truncatedBegin = truncateTime(begin);
+        Date truncatedEnd = truncateTime(end);
+
+        ArrayList<IWorkday> result = new ArrayList<>();
+
+        for (IWorkday workday : workdays.values()) {
+            if (workday.getWhen().getTime() >= truncatedBegin.getTime() && workday.getWhen().getTime() <= truncatedEnd.getTime())
+                result.add(workday);
+        }
+
+        return result;
+    }
+
+    @Override
     public List<? extends IWorkday> getAllWorkdays() {
         ArrayList<IWorkday> result = new ArrayList<>();
         result.addAll(workdays.values());

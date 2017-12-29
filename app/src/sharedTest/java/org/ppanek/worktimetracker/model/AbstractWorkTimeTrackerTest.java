@@ -13,6 +13,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
 /**
@@ -145,6 +146,43 @@ public abstract class AbstractWorkTimeTrackerTest {
         assertEquals(1, tracker.getAllWorkdays().size());
         tracker.removeWorkday(secondWhen);
         assertEquals(0, tracker.getAllWorkdays().size());
+    }
+    
+    @Test
+    public void testGetWorkdaysInRange() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 2017);
+        calendar.set(Calendar.MONTH, 11);
+        calendar.set(Calendar.DAY_OF_MONTH, 29);
+        calendar.set(Calendar.HOUR, 4);
+        
+        Date beginDate = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        Date firstWorkdayDate = calendar.getTime();
+        calendar.add(Calendar.YEAR, 1);
+        Date secondWorkdayDate = calendar.getTime();
+        calendar.add(Calendar.HOUR, 4);
+        Date endDate = calendar.getTime();
+
+        IWorkTimeTracker tracker = createTracker();
+
+        IWorkday firstWorkday = tracker.newWorkday();
+        tracker.putWorkday(firstWorkdayDate, firstWorkday);
+
+        IWorkday secondWorkday = tracker.newWorkday();
+        tracker.putWorkday(secondWorkdayDate, secondWorkday);
+
+        List<? extends IWorkday> workdays = tracker.getWorkdays(beginDate, endDate);
+        assertEquals(2, workdays.size());
+        assertTrue(workdays.contains(firstWorkday));
+        assertTrue(workdays.contains(secondWorkday));
+
+        workdays = tracker.getWorkdays(beginDate, beginDate);
+        assertEquals(0, workdays.size());
+
+        workdays = tracker.getWorkdays(endDate, endDate);
+        assertEquals(1, workdays.size());
+        assertTrue(workdays.contains(secondWorkday));
     }
 
     private void compareDates(Date dateExpected, Date dateRetrieved) {

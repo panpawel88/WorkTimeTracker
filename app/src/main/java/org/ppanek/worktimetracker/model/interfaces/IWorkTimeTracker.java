@@ -11,6 +11,7 @@ public interface IWorkTimeTracker {
     IWorkday newWorkday();
     void putWorkday(Date date, IWorkday workday);
     IWorkday getWorkday(Date date);
+    List<? extends IWorkday> getWorkdays(Date begin, Date end);
     List<? extends IWorkday> getAllWorkdays();
     void removeWorkday(Date date);
 }
