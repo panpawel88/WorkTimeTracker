@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements CalendarFragment.OnFragmentInteractionListener, StatsFragment.OnFragmentInteractionListener {
+import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity implements CalendarFragment.OnDaySelectedListener, StatsFragment.OnFragmentInteractionListener, CalendarNewWorkdayFragment.OnFragmentInteractionListener {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -15,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
                     case R.id.navigation_home: {
                         FragmentManager manager = getFragmentManager();
                         FragmentTransaction transaction = manager.beginTransaction();
-                        transaction.replace(R.id.content, new CalendarFragment());
+                        transaction.replace(R.id.content, CalendarFragment.newInstance());
                         transaction.commit();
                         return true;
                     }
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
 
         FragmentManager manager = getFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.content, new CalendarFragment());
+        transaction.add(R.id.content, CalendarFragment.newInstance());
         transaction.commit();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -49,5 +51,14 @@ public class MainActivity extends AppCompatActivity implements CalendarFragment.
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onDaySelected(Calendar calendar) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        CalendarNewWorkdayFragment calendarNewWorkdayFragment = CalendarNewWorkdayFragment.newInstance(calendar);
+        fragmentTransaction.replace(R.id.calendarContent, calendarNewWorkdayFragment);
+        fragmentTransaction.commit();
     }
 }
