@@ -1,36 +1,37 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="org.ppanek.worktimetracker.CalendarNewWorkdayFragment"
-    android:stretchColumns="1"
-    android:orientation="horizontal">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="org.ppanek.worktimetracker.CalendarNewWorkdayFragment"
+             android:stretchColumns="1"
+             android:orientation="horizontal">
 
     <TableRow>
 
         <TextView
-            android:id="@+id/calendar_new_workday_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_span="2"
-            android:text="@string/app_name"
-            android:textAppearance="@android:style/TextAppearance.Material.Headline" />
+                android:id="@+id/calendar_new_workday_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:text="@string/app_name"
+                android:textAppearance="@android:style/TextAppearance.Material.Headline"/>
     </TableRow>
     <TableRow
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content">
-        <ImageView
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_input_add" />
+            android:layout_width="wrap_content">
+        <ImageView
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_input_add"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="Add new"
-            android:textAppearance="@android:style/TextAppearance.Material.Body2" />
+                android:id="@+id/addNewText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Add new"
+                android:textAppearance="@android:style/TextAppearance.Material.Body2"/>
     </TableRow>
 
 </TableLayout>

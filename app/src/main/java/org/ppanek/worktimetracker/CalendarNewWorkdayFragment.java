@@ -1,12 +1,15 @@
 package org.ppanek.worktimetracker;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -45,7 +48,23 @@ public class CalendarNewWorkdayFragment extends Fragment {
             SimpleDateFormat format = new SimpleDateFormat("dd-MM");
             textView.setText(format.format(calendar.getTime()));
         }
+
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageButton);
+        TextView addNewText = (TextView) view.findViewById(R.id.addNewText);
+
+        setOnClickListener(imageView);
+        setOnClickListener(addNewText);
         return view;
+    }
+
+    private void setOnClickListener(View view) {
+        view.setOnClickListener(v -> {
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.content, new AddNewWorkdayFragment());
+            transaction.commit();
+
+        });
     }
 
     @Override
@@ -55,7 +74,7 @@ public class CalendarNewWorkdayFragment extends Fragment {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnDaySelectedListener");
+                    + " must implement OnFragmentInteractionListener");
         }
     }
 

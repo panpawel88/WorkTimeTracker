@@ -24,14 +24,6 @@ public abstract class AbstractWorkTimeTrackerTest {
 
     public abstract IWorkTimeTracker createTracker();
 
-    @Before
-    public void setUp() throws IOException {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
     @Test
     public void testSetAndGetWorkday() {
         IWorkTimeTracker tracker = createTracker();

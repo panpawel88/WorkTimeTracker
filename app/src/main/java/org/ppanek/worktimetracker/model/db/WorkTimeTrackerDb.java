@@ -1,5 +1,6 @@
 package org.ppanek.worktimetracker.model.db;
 
+import android.app.Activity;
 import org.ppanek.worktimetracker.model.base.WorkTimeTrackerBase;
 import org.ppanek.worktimetracker.model.interfaces.IWorkday;
 
@@ -17,7 +18,9 @@ public class WorkTimeTrackerDb extends WorkTimeTrackerBase {
     private final Box<WorkdayDb> box;
 
     public WorkTimeTrackerDb() {
-        this(MyObjectBox.builder().build().boxFor(WorkdayDb.class));
+        if (BoxStoreInstance.Get() == null)
+            BoxStoreInstance.Set(MyObjectBox.builder().build());
+        this.box = BoxStoreInstance.Get().boxFor(WorkdayDb.class);
     }
 
     public WorkTimeTrackerDb(Box<WorkdayDb> box) {
@@ -38,7 +41,7 @@ public class WorkTimeTrackerDb extends WorkTimeTrackerBase {
 
         Date truncated = truncateTime(date);
         WorkdayDb updated = (WorkdayDb) workday;
-        WorkdayDb original  = getWorkdayByDate(truncated);
+        WorkdayDb original = getWorkdayByDate(truncated);
         if (original != null) {
             if (original.getId() != updated.getId())
                 throw new IllegalStateException("Couldn't put more than one Workday per day");

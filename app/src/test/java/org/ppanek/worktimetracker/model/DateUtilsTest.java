@@ -93,7 +93,7 @@ public class DateUtilsTest {
             try {
                 int hour = pair[0];
                 int minute = pair[1];
-                Date date = DateUtils.createDate(hour, minute);
+                DateUtils.createDate(hour, minute);
                 fail("Exception not thrown");
             } catch (IllegalArgumentException exception) {
                 // intentionally empty

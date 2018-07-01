@@ -23,12 +23,10 @@ public class WorkTimeTrackerDbTest extends AbstractWorkTimeTrackerTest {
     @Before
     public void setUp() throws IOException {
         objectBoxTest.setUp();
-        super.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
-        super.tearDown();
         objectBoxTest.tearDown();
     }
 
